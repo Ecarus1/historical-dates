@@ -1,0 +1,68 @@
+.box-content {
+  width: 1440px; /* задаем ширину блока */
+  margin: 0 auto; /*на случай, если экран очень широкий*/
+  max-width: 100%; /* задаем максимально возможную ширину блока */
+  // background-color: aqua;
+  position: relative;
+  box-sizing: border-box;
+  border-top: 1px solid transparent;
+  overflow: hidden;
+
+  &::before, &::after {
+    content: "";
+    position: absolute;
+    opacity: 0.1;
+    box-sizing: border-box;
+    width: 1px;
+    height: 100%;
+    top: 0;
+    background: #42567A;
+  }
+
+  &::before {
+    left: 0;
+  }
+
+  &::after {
+    right: 0;
+  }
+
+  &__horizont, &__vertical {
+    position: absolute;
+    opacity: 0.1;
+    box-sizing: border-box;
+  }
+
+  &__horizont {
+    height: 1px;
+    border-bottom: 1px solid #42567A;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &__vertical {
+    height: 100%;
+    border-left: 1px solid #42567A;
+    width: 1px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@media screen and (max-width: 1920px) { 
+  .box-content {
+    margin: 0 160px 0 auto;
+  }
+}
+
+@media screen and (max-width: 1440px) {
+}
+
+@media screen and (max-width: 1200px) {
+}
+
+@media screen and (max-width: 992px) {
+}

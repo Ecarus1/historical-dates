@@ -1,0 +1,22 @@
+.title-page {
+  position: absolute;
+  width: 433px;
+  display: flex;
+  justify-content: space-between;
+  left: 0;
+  top: 170px;
+
+  &__line {
+    width: 5px;
+    background: linear-gradient(180deg, #3877EE -5%, #EF5DA8 85%);
+  }
+
+  &__title {
+    width: 353px;
+    font-family: 'PT Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 56px;
+    line-height: 120%;
+  }
+}

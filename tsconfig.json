@@ -1,0 +1,43 @@
+// {
+//   "compilerOptions": {
+//     "baseUrl": "src",
+//     "esModuleInterop": true,
+//     "jsx": "react",
+//     "lib": ["dom", "dom.iterable", "esnext"],
+//     "module": "esnext",
+//     "moduleResolution": "node",
+//     "resolveJsonModule": true,
+//     "skipLibCheck": true,
+//     "strict": true,
+//     "target": "es5"
+//   },
+//   "include": ["src"]
+// }
+
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "components/*": ["./src/components/*"],
+      "@/*": ["./src/*"]
+    },
+    "outDir": "./dist/",
+    "target": "es5",
+    "module": "es6",
+    "moduleResolution": "node",
+    "noResolve": false,
+    "removeComments": true,
+    "sourceMap": true,
+    "allowJs": true,
+    "jsx": "react",
+
+    "strict": true,
+    "noImplicitAny": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true
+  },
+  "exclude": [
+    "./node_modules/**/*"
+  ]
+}
