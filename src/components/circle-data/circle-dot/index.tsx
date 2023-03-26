@@ -3,10 +3,17 @@ import {motion, useAnimationFrame} from "framer-motion";
 
 import "./style.scss";
 
-interface Position {
+type Point = {
   x: number;
   y: number;
-}
+};
+
+type Rectangle = {
+  minX: number,
+  minY: number,
+  maxX: number,
+  maxY: number,
+};
 
 interface ICircleDot {
   index: number;
@@ -28,8 +35,15 @@ function CircleDot({index, active, activeIndex, onClick, centerX, centerY, radiu
     x: centerX + radius * Math.cos(index * _STEP ),
     y: centerY + radius * Math.sin(index * _STEP )
   });
+  const pos = useRef({
+    x: centerX + radius * Math.cos(index * _STEP ),
+    y: centerY + radius * Math.sin(index * _STEP )
+  });
+  const rectangleArea = { minX: 385.5, minY: 20.5033, maxX: 392.5, maxY: 29.5033 };
+
   const dotRef = useRef(null);
-  let angle = 0;
+  // let angle = 0;
+  const targetAngle = useRef(0);
 
   const handleClick = () => {
     onClick(active ? null : index);
@@ -47,12 +61,17 @@ function CircleDot({index, active, activeIndex, onClick, centerX, centerY, radiu
     return index * step;
   }
 
-  const distance = (point1: Position, point2: Position): number => {
-    const dx = point1.x - point2.x;
-    const dy = point1.y - point2.y;
-  
-    return Math.sqrt(dx * dx + dy * dy);
+  const isPointInProtectedArea = (point: Point, area: Rectangle) => {
+    const { x, y } = point;
+    const { minX, minY, maxX, maxY } = area;
+    
+    return (x >= minX && x <= maxX && y >= minY && y <= maxY);
   }
+
+  // const isDotInProtectedArea = isPointInProtectedArea(
+  //   pos.current,
+  //   { minX: 385.5, minY: 20.5033, maxX: 392.5, maxY: 29.5033 }
+  // );
 
   useEffect(() => {
     // console.log(index, position)
@@ -70,20 +89,27 @@ function CircleDot({index, active, activeIndex, onClick, centerX, centerY, radiu
     //   (dotRef.current as HTMLDivElement).style.left = `${x}px`;
     // }
 
-    let newPosition = Object.assign({}, position);
+
+    // let clonePosition = Object.assign({}, position);
 
     if(activeIndex !== null) {
-      angle += 0.003 * delta;
-      newPosition.x = centerX + radius * Math.cos(-angle + index * _STEP);
-      newPosition.y = centerY + radius * Math.sin(-angle + index * _STEP);
-    } else {
-      // newPosition = Object.assign({}, position)
+      // const targetAngle = (activeIndex * _STEP) * (delta);
+      targetAngle.current += -delta * 0.0008;
+      const angle = angleForPosition(index, _STEP) + targetAngle.current;
+      pos.current.x = centerX + radius * Math.cos(angle);
+      pos.current.y = centerY + radius * Math.sin(angle);
+
+      // if (active && (pos.current.y <= 29.5033 && pos.current.y >= 20.5033) && (pos.current.x <= 392.5 && pos.current.x >= 385.5)) {
+        if(active && isPointInProtectedArea(pos.current, rectangleArea)) {
+        // clonePosition = {...position};
+        onClick(null);
+      }
     }
+
+    // setPosition(clonePosition);
+
+    const {x, y} = pos.current;
     
-    setPosition({...newPosition});
-
-    const {x, y} = newPosition;
-
     if(dotRef.current) {
       (dotRef.current as HTMLDivElement).style.top = `${y}px`;
       (dotRef.current as HTMLDivElement).style.left = `${x}px`
