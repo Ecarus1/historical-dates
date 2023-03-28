@@ -1,0 +1,24 @@
+@media (min-width: 1440px) {
+}
+
+@media (max-width: 1439px) {
+}
+
+@media (max-width: 1023px) {
+}
+
+@media (max-width: 767px) {
+  .slide {
+    &__title {
+      font-size: 16px;
+    }
+
+    &__text {
+      font-size: 14px;
+      line-height: 145%;
+    }
+  }
+}
+
+@media (max-width: 320px) {
+}

@@ -1,0 +1,32 @@
+@mixin title-year {
+  font-family: 'PT Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 200px;
+  line-height: 160px;
+
+  text-align: center;
+  letter-spacing: -0.02em;
+}
+
+.year-title {
+  width: 973px;
+  display: flex;
+  max-width: 100%;
+  justify-content: space-between;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  &__from, &__before {
+    @include title-year();
+  }
+
+  &__from {
+    color: #5D5FEF;
+  }
+
+  &__before {
+    color: #EF5DA8;
+  }
+}

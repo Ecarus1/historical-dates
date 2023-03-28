@@ -1,5 +1,5 @@
-import React, {useState, useRef, useEffect} from "react";
-import {motion, useAnimationFrame} from "framer-motion";
+import React, {useRef} from "react";
+import {useAnimationFrame} from "framer-motion";
 
 import "./style.scss";
 
@@ -23,38 +23,27 @@ interface ICircleDot {
   centerX: number;
   centerY: number;
   radius: number;
-  // coords: {
-  //   x: number;
-  //   y: number
-  // };
+  _STEP: number;
+  finish: boolean;
+  changeFinish: (arg: boolean) => void;
 }
 
-function CircleDot({index, active, activeIndex, onClick, centerX, centerY, radius}: ICircleDot) {
-  const _STEP = ((2 * Math.PI) / 6);
-  const [position, setPosition] = useState({
-    x: centerX + radius * Math.cos(index * _STEP ),
-    y: centerY + radius * Math.sin(index * _STEP )
-  });
+function CircleDot({index, active, activeIndex, onClick, centerX, centerY, radius, _STEP, finish, changeFinish}: ICircleDot) {
   const pos = useRef({
     x: centerX + radius * Math.cos(index * _STEP ),
     y: centerY + radius * Math.sin(index * _STEP )
   });
-  const rectangleArea = { minX: 385.5, minY: 20.5033, maxX: 392.5, maxY: 29.5033 };
+
+  const rectangleArea = { minX: 385.5, minY: 27.5033, maxX: 397.5, maxY: 35.5033 };
 
   const dotRef = useRef(null);
-  // let angle = 0;
   const targetAngle = useRef(0);
 
   const handleClick = () => {
-    onClick(active ? null : index);
-
-    // const targetAngle = index * _STEP;
-    // const angle = angleForPosition(index, _STEP) + targetAngle;
-    // const clonePosition = Object.assign({}, position);
-    // clonePosition.x = centerX + radius * Math.cos(angle);
-    // clonePosition.y = centerY + radius * Math.sin(angle);
-
-    // setPosition(clonePosition);
+    if(finish && !active) {
+      onClick(index);
+      changeFinish(false);
+    }
   }
 
   const angleForPosition = (index: number, step: number): number => {
@@ -68,45 +57,17 @@ function CircleDot({index, active, activeIndex, onClick, centerX, centerY, radiu
     return (x >= minX && x <= maxX && y >= minY && y <= maxY);
   }
 
-  // const isDotInProtectedArea = isPointInProtectedArea(
-  //   pos.current,
-  //   { minX: 385.5, minY: 20.5033, maxX: 392.5, maxY: 29.5033 }
-  // );
-
-  useEffect(() => {
-    // console.log(index, position)
-  }, [position]);
-  // const posY = centerY + radius * Math.sin(step * index)+"px";
-  // const posX = centerX + radius * Math.cos(step * index)+"px"
-  // let angle = 0;
-
   useAnimationFrame((time, delta) => {
-    // if(dotRef.current) {
-    //   angle += 0.0003 * delta;
-    //   const x = centerX + radius * Math.cos(-angle + index * _STEP);
-    //   const y = centerY + radius * Math.sin(-angle + index * _STEP);
-    //   (dotRef.current as HTMLDivElement).style.top = `${y}px`;
-    //   (dotRef.current as HTMLDivElement).style.left = `${x}px`;
-    // }
-
-
-    // let clonePosition = Object.assign({}, position);
-
-    if(activeIndex !== null) {
-      // const targetAngle = (activeIndex * _STEP) * (delta);
-      targetAngle.current += -delta * 0.0008;
+    if(!finish) {
+      targetAngle.current += -delta * 0.0028;
       const angle = angleForPosition(index, _STEP) + targetAngle.current;
       pos.current.x = centerX + radius * Math.cos(angle);
       pos.current.y = centerY + radius * Math.sin(angle);
 
-      // if (active && (pos.current.y <= 29.5033 && pos.current.y >= 20.5033) && (pos.current.x <= 392.5 && pos.current.x >= 385.5)) {
-        if(active && isPointInProtectedArea(pos.current, rectangleArea)) {
-        // clonePosition = {...position};
-        onClick(null);
+      if(active && isPointInProtectedArea(pos.current, rectangleArea)) {
+        changeFinish(true);
       }
     }
-
-    // setPosition(clonePosition);
 
     const {x, y} = pos.current;
     
@@ -114,63 +75,13 @@ function CircleDot({index, active, activeIndex, onClick, centerX, centerY, radiu
       (dotRef.current as HTMLDivElement).style.top = `${y}px`;
       (dotRef.current as HTMLDivElement).style.left = `${x}px`
     }
-
-
-    // let clonePosition = Object.assign({}, position);
-
-    // if(activeIndex !== null) {
-    //   const targetAngle = activeIndex * _STEP;
-    //   const angle = angleForPosition(index, _STEP) + targetAngle;
-    //   clonePosition.x = centerX + radius * Math.cos(angle);
-    //   clonePosition.y = centerY + radius * Math.sin(angle);
-
-    //   if (distance(position, clonePosition) < 1) {
-    //     clonePosition = {...position};
-    //     onClick(null);
-    //   }
-    // } else {
-    //   const angle = angleForPosition(index, _STEP) + 0.0003 * delta;
-    //   clonePosition.x = centerX + radius * Math.cos(angle);
-    //   clonePosition.y = centerY + radius * Math.sin(angle);
-    // }
-
-    // setPosition(clonePosition);
-
-    // const {x, y} = clonePosition;
-    
-    // if(dotRef.current) {
-    //   (dotRef.current as HTMLDivElement).style.top = `${y}px`;
-    //   (dotRef.current as HTMLDivElement).style.left = `${x}px`
-    // }
   });
 
   return (
-    // <motion.div
-    //   className="circle-dot"
-    //   style={{
-    //     x: coords.x,
-    //     y: coords.y,
-    //     zIndex: active ? 1 : 0
-    //   }}
-    //   onClick={handleClick}
-    //   animate={{
-    //     // x: coords.x,
-    //     y: active ? -75 : coords.y,
-    //     transition: {
-    //       duration: 2,
-    //       ease: "linear"
-    //       // type: "spring",
-    //       // stiffness: 200,
-    //       // damping: 20
-    //     }
-    //   }}
-    //   layout
-    //   layoutId={`dot-${index}`}
-    // > {index} </motion.div>
-    <div onClick={handleClick} className="circle-dot" ref={dotRef}> 
-      {index} 
+    <div onClick={handleClick} className={`circle-dot ${active && 'circle-dot_active'}`} ref={dotRef}>
+      {index + 1}
     </div>
   );
 }
 
-export default CircleDot;
+export default React.memo(CircleDot);

@@ -1,0 +1,36 @@
+@media (min-width: 1440px) {
+}
+
+@media (max-width: 1439px) {
+}
+
+@media (max-width: 1023px) {
+  .year-title {
+    &__from, &__before {
+      font-size: 130px;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .year-title {
+    width: 100%;
+    max-width: 400px;
+    position: static;
+    transform: none;
+    margin: 56px auto 0 auto;
+    &__from, &__before {
+      font-size: 67px;
+      line-height: 72px;
+    }
+  }
+}
+
+@media (max-width: 320px) {
+  .year-title {
+    &__from, &__before {
+      font-size: 56px;
+      line-height: 72px;
+    }
+  }
+}

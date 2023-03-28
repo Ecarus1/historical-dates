@@ -1,0 +1,28 @@
+.slide {
+  min-height: 135px;
+  max-width: 320px;
+
+  &__title {
+    display: inline-block;
+    margin: 0 0 15px 0;
+
+    font-family: 'Bebas Neue';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 25px;
+    line-height: 120%;
+
+    text-transform: uppercase;
+    color: #3877EE;
+  }
+
+  &__text {
+    font-family: 'PT Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 30px;
+    
+    color: #42567A;
+  }
+}

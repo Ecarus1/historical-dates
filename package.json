@@ -10,11 +10,14 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@svgr/webpack": "7.0.0",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
+    "@types/swiper": "6.0.0",
     "babel-loader": "9.1.2",
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.7.3",
+    "file-loader": "6.2.0",
     "html-webpack-plugin": "^5.5.0",
     "node-sass": "^8.0.0",
     "sass-loader": "^13.2.1",
@@ -30,6 +33,7 @@
     "framer-motion": "10.8.5",
     "gsap": "3.11.5",
     "react": "^18.2.0",
+    "react-countup": "6.4.2",
     "react-dom": "^18.2.0",
     "swiper": "9.1.1"
   }

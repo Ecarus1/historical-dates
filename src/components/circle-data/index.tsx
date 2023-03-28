@@ -1,89 +1,44 @@
-// import React, { useCallback, useState } from "react";
-
-// import CircleDot from "./circle-dot";
-
-// import "./style.scss"
-
-// function CircleData() {
-//   const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  
-//   const numberOfDots = 6;
-//   const radius = 265;
-//   const centerX = 260;
-//   const centerY = 259;
-
-//   const step = (2 * Math.PI) / numberOfDots;
-//   const angles = [-step, 0, step, step * 2];
-
-//   const handleClick = (index: number | null) => {
-//     setActiveIndex(index);
-//   }
-
-//   const renderItems = useCallback(() => {
-//     let dots = [...Array(numberOfDots)].map((_, index) => {
-//       // const index = i + 1;
-//       // const angleOffset = ((2 * Math.PI) / 6) * activeIndex;
-//       // const x = centerX + radius * Math.cos(index * step );
-//       // const y = centerY + radius * Math.sin(index * step );
-
-//       return(
-//         <CircleDot
-//           key={index}
-//           index={index}
-//           active={index === activeIndex}
-//           activeIndex={activeIndex}
-//           onClick={handleClick}
-//           centerX={centerX}
-//           centerY={centerY}
-//           radius={radius}
-//           // coords={{x, y}}
-//         />
-//       )
-//     });
-//     return dots
-//   }, [activeIndex]);
-
-//   return (
-//     <div className="circle-data">
-//       {renderItems()}
-//     </div>
-//   );
-// }
-
-// export default CircleData;
-
-
-
-
-
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import CircleDot from "./circle-dot";
 
-import "./style.scss"
+import "./style.scss";
+import "./media.scss";
 
-function CircleData() {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+interface ICircleData {
+  countDataCircles: number;
+  setActiveIndex: (arg: number) => void;
+  activeIndex: number;
+  children: React.ReactNode;
+  setFinish: (agr: boolean) => void;
+  finish: boolean;
+}
+
+function CircleData({countDataCircles, setActiveIndex, activeIndex, setFinish, finish, children}: ICircleData) {
+  // const [activeIndex, setActiveIndex] = useState<number | null>(5);
+  // const [finish, setFinish] = useState(true);
   
-  const numberOfDots = 6;
+  // const numberOfDots = 6;
   const radius = 265;
-  const centerX = 260;
-  const centerY = 259;
+  const centerX = 265;
+  const centerY = 265;
 
-  const step = (2 * Math.PI) / numberOfDots;
-  const angles = [-step, 0, step, step * 2];
+  const _STEP = (2 * Math.PI) / countDataCircles;
 
-  const handleClick = (index: number | null) => {
+  const handleClick = (index: number) => {
     setActiveIndex(index);
   }
 
-  const renderItems = useCallback(() => {
-    let dots = [...Array(numberOfDots)].map((_, index) => {
-      // const index = i + 1;
-      // const angleOffset = ((2 * Math.PI) / 6) * activeIndex;
-      // const x = centerX + radius * Math.cos(index * step );
-      // const y = centerY + radius * Math.sin(index * step );
+  const changeFinish = (arg: boolean) => {
+    setFinish(arg);
+  }
 
+  useEffect(() => {
+    setFinish(false);
+  }, [activeIndex]);
+
+  const renderItems = useCallback(() => {
+    let dots = [...Array(countDataCircles)].map((_, index) => {
       return(
         <CircleDot
           key={index}
@@ -94,16 +49,22 @@ function CircleData() {
           centerX={centerX}
           centerY={centerY}
           radius={radius}
-          // coords={{x, y}}
+          _STEP={_STEP}
+          finish={finish}
+          changeFinish={changeFinish}
         />
       )
     });
     return dots
-  }, [activeIndex]);
+  }, [activeIndex, finish]);
 
   return (
     <div className="circle-data">
-      {renderItems()}
+      {children}
+
+      <div className="circle-data__circle">
+        {renderItems()}
+      </div>
     </div>
   );
 }

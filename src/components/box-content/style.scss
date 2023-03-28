@@ -3,10 +3,13 @@
   margin: 0 auto; /*на случай, если экран очень широкий*/
   max-width: 100%; /* задаем максимально возможную ширину блока */
   // background-color: aqua;
+  box-sizing: content-box;
+  padding: 0 80px 100px 80px;
   position: relative;
   box-sizing: border-box;
   border-top: 1px solid transparent;
   overflow: hidden;
+  min-height: 100vh;
 
   &::before, &::after {
     content: "";

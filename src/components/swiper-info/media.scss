@@ -1,0 +1,23 @@
+@media (min-width: 1440px) {
+}
+
+@media (max-width: 1439px) {
+}
+
+@media (max-width: 1023px) {
+}
+
+@media (max-width: 767px) {
+  .slider {
+    padding: 20px 0 0 0;
+    margin: 57px 0 0 0;
+    border-top: 1px solid #C7CDD9;
+
+    &__button-next, &__button-next {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 320px) {
+}

@@ -1,6 +1,7 @@
 import React from "react";
 
 import "./style.scss";
+import "./media.scss";
 
 interface IBoxContent {
   children: React.ReactNode;

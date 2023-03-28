@@ -1,5 +1,6 @@
 import React from "react";
 import "./style.scss";
+import "./media.scss";
 
 interface ITitlePage {
   title: string

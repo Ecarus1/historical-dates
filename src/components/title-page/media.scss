@@ -1,0 +1,39 @@
+@media (min-width: 1440px) {
+}
+
+@media (max-width: 1439px) {
+}
+
+@media (max-width: 1023px) {
+  .title-page {
+    &__title {
+      font-size: 46px;
+      line-height: 120%;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .title-page {
+    position: static;
+    margin: 59px 0 0 0;
+    width: 123px;
+    &__line {
+      display: none;
+    }
+    
+    &__title {
+      font-size: 30px;
+      line-height: 120%;
+    }
+  }
+}
+
+@media (max-width: 320px) {
+  .title-page {
+    &__title {
+      font-size: 20px;
+      line-height: 120%;
+    }
+  }
+}
